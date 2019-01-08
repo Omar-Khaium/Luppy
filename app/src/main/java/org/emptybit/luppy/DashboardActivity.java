@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    public static String SELECTED_ITEM = "";
     Button xLadiesItems, xGentsItems, xExtras;
 
     @Override
@@ -24,6 +25,14 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), LadiesItemsActivity.class));
+            }
+        });
+
+        xExtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DashboardActivity.SELECTED_ITEM = "Extra";
+                startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
     }

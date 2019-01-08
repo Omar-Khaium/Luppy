@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<ProductModel> arrayList;
+    ArrayList<CategoryModel> arrayList;
 
-    public ShopAdapter(Context context, ArrayList<ProductModel> arrayList) {
+    public ShopAdapter(Context context, ArrayList<CategoryModel> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -31,10 +31,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ShopAdapter.ViewHolder holder, int position) {
-        holder.xCategoryName.setText("Women Dresses");
+        holder.xCategoryName.setText(arrayList.get(position).getName());
 
         holder.xProductListView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        ProductAdapter adapter = new ProductAdapter(arrayList);
+        ProductAdapter adapter = new ProductAdapter(arrayList.get(position).getProductModels());
         holder.xProductListView.setAdapter(adapter);
 
     }

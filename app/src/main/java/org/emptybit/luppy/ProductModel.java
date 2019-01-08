@@ -1,23 +1,23 @@
 package org.emptybit.luppy;
 
 public class ProductModel {
-    private String photo;
+    private int path;
     private int price;
 
     public ProductModel() {
     }
 
-    public ProductModel(String photo, int price) {
-        this.photo = photo;
+    public ProductModel(int path, int price) {
+        this.path = path;
         this.price = price;
     }
 
-    public String getPhoto() {
-        return photo;
+    public int getPath() {
+        return path;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPath(int path) {
+        this.path = path;
     }
 
     public int getPrice() {

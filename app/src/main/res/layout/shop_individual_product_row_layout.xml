@@ -29,19 +29,18 @@
                     android:layout_height="200dp"
                     android:background="@color/colorPrimaryDark" />
 
-                <TextView
-                    android:id="@+id/shop_individual_product_item_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/shop_individual_product_item_image"
-                    android:layout_alignBottom="@+id/shop_individual_product_item_image"
-                    android:padding="5dp"
-                    android:text="Price : 2,000 TK"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/textS"
-                    android:textStyle="bold" />
-
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/shop_individual_product_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="5dp"
+                android:text="Price : 2,000 TK"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textS"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

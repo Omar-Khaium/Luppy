@@ -3,18 +3,22 @@ package org.emptybit.luppy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 public class LadiesItemsActivity extends AppCompatActivity {
 
-    public static String SELECTED_ITEM = "";
     Button xWomenDress, xWomenJeans, xWomenTShirt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ladies_items);
+
+        Toolbar toolbar = findViewById(R.id.ladies_items_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         xWomenDress = findViewById(R.id.ladies_items_dresses);
         xWomenJeans = findViewById(R.id.ladies_items_jeans);
@@ -23,7 +27,7 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenDress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SELECTED_ITEM = "Women Dress";
+                DashboardActivity.SELECTED_ITEM = "Women Dress";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
@@ -31,7 +35,7 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenJeans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SELECTED_ITEM = "Women Jeans";
+                DashboardActivity.SELECTED_ITEM = "Women Jeans";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
@@ -39,7 +43,7 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenTShirt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SELECTED_ITEM = "Women T-Shirt";
+                DashboardActivity.SELECTED_ITEM = "Women T-Shirt";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });

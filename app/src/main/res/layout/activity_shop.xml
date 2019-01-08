@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/login_toolbar"
+            android:id="@+id/shop_items_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="#df4cdf"

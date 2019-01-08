@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#14000000"
     android:orientation="vertical"
     tools:context=".LadiesItemsActivity">
 
@@ -14,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/login_toolbar"
+            android:id="@+id/ladies_items_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="#df4cdf"
@@ -25,48 +24,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="15dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:weightSum="3">
+        android:background="@drawable/ladies_items_background">
 
-        <Button
-            android:id="@+id/ladies_items_dresses"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/female_gradient"
-            android:text="Women's Dresses"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textXXL"
-            android:textStyle="bold" />
+            android:layout_height="fill_parent"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="3">
 
-        <Button
-            android:id="@+id/ladies_items_jeans"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/male_gradient"
-            android:text="Women's Jeans"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textXXL"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/ladies_items_dresses"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/female_gradient"
+                android:text="Women's Dresses"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textXXL"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/ladies_items_tshirts"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/extra_gradient"
-            android:text="Women's T-Shirt"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textXXL"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/ladies_items_jeans"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/male_gradient"
+                android:text="Women's Jeans"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textXXL"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/ladies_items_tshirts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/extra_gradient"
+                android:text="Women's T-Shirt"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textXXL"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

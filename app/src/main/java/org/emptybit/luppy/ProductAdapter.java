@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
@@ -30,7 +28,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
-        Picasso.get().load(arrayList.get(position).getPhoto()).into(holder.xImage);
+        holder.xImage.setImageResource(arrayList.get(position).getPath());
         holder.xPrice.setText("Price : " + String.valueOf(arrayList.get(position).getPrice()) + " TK");
     }
 
