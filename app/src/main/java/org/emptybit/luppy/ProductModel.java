@@ -1,15 +1,25 @@
 package org.emptybit.luppy;
 
 public class ProductModel {
+    private int id;
     private int path;
     private int price;
 
     public ProductModel() {
     }
 
-    public ProductModel(int path, int price) {
+    public ProductModel(int id, int path, int price) {
+        this.id = id;
         this.path = path;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPath() {
