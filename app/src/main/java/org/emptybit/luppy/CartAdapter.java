@@ -24,7 +24,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final CartAdapter.ViewHolder holder, final int position) {
-        holder.xImage.setImageResource(cart.get(position).getProductModel().getPath());
+//        holder.xImage.setImageResource(cart.get(position).getProductModel().getPath());
         holder.xName.setText("Item " + String.valueOf(position + 1));
         holder.xPrice.setText(cart.get(position).getProductModel().getPrice() + " TK");
         holder.xCount.setText(String.valueOf(cart.get(position).getQuantity()));
@@ -61,9 +61,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return cart.size();
     }
 
-    public OrderModel findOrder(int id) {
+    public OrderModel findOrder(String id) {
         for (OrderModel order : cart) {
-            if (order.getProductModel().getId() == id) {
+            if (order.getProductModel().getId().equals(id)) {
                 return order;
             }
         }

@@ -35,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ProductAdapter.ViewHolder holder, final int position) {
-        holder.xImage.setImageResource(arrayList.get(position).getPath());
+//        holder.xImage.setImageResource(arrayList.get(position).getPath());
         holder.xPrice.setText("Price : " + String.valueOf(arrayList.get(position).getPrice()) + " TK");
 
         holder.xAddToCart.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +93,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         else return arrayList.size();
     }
 
-    public OrderModel findOrder(int id) {
+    public OrderModel findOrder(String id) {
         for (OrderModel order : cart) {
-            if (order.getProductModel().getId() == id) {
+            if (order.getProductModel().getId().equals(id)) {
                 return order;
             }
         }

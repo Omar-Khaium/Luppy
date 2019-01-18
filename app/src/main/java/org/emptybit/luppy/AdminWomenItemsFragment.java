@@ -1,0 +1,91 @@
+package org.emptybit.luppy;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class AdminWomenItemsFragment extends Fragment {
+
+    View view;
+    FirebaseDatabase database;
+    private RecyclerView xListView;
+    private ArrayList<ProductModel> arrayList;
+    private FloatingActionButton xAdd;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_women_items, container, false);
+        xListView = view.findViewById(R.id.women_recycler_list);
+        xAdd = view.findViewById(R.id.women_fragment_add);
+
+        getData();
+
+
+        xAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddProductActivity.class));
+            }
+        });
+
+        return view;
+    }
+
+
+    public int getData() {
+        try {
+            arrayList = new ArrayList<>();
+            database = FirebaseDatabase.getInstance();
+            database.getReference("products").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        try {
+                            if (snapshot.getValue(ProductModel.class).getCategory().equals("Ladies Items")) {
+                                arrayList.add(snapshot.getValue(ProductModel.class));
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    WomenFragmentAdapter adapter = new WomenFragmentAdapter(getContext(), arrayList);
+                    xListView.setAdapter(adapter);
+                    xListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Database Exception : " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            return 1;
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            return 0;
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        arrayList = new ArrayList<>();
+    }
+}
