@@ -11,11 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    public static ArrayList<OrderModel> cart = new ArrayList<>();
+    public static String PRODUCT_ID = "";
     Button xSubmit;
     TextInputEditText xEmail, xPassword;
     int PERMISSION_ALL = 1;

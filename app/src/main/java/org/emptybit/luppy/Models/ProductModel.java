@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Models;
 
 public class ProductModel {
     private String id;

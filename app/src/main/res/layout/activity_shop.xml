@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#80000000"
     android:orientation="vertical"
-    tools:context=".LadiesItemsActivity">
+    tools:context=".ShopActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
             android:id="@+id/shop_items_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#df4cdf"
             app:title="Products" />
 
     </android.support.design.widget.AppBarLayout>
@@ -30,7 +29,10 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/shop_items_to_display_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <include layout="@layout/shimmer_shop_layout" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/shop_items_to_display_cart"
@@ -39,7 +41,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_cart" />

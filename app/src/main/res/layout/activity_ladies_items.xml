@@ -16,7 +16,7 @@
             android:id="@+id/ladies_items_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#df4cdf"
+            android:background="@color/colorLadies"
             app:title="Ladies Items" />
 
     </android.support.design.widget.AppBarLayout>

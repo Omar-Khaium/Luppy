@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddProductActivity">
+    tools:context=".EditProductActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -14,14 +14,13 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/add_product_toolbar"
+            android:id="@+id/edit_product_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="New Product" />
+            app:title="Modify Product" />
 
     </android.support.design.widget.AppBarLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,12 +30,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
             android:padding="25dp">
 
             <ImageView
-                android:id="@+id/add_product_image"
+                android:id="@+id/edit_product_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
@@ -51,7 +49,7 @@
                 android:textColorHint="@android:color/white">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/add_product_name"
+                    android:id="@+id/edit_product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
@@ -61,7 +59,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Spinner
-                android:id="@+id/add_product_category"
+                android:id="@+id/edit_product_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_border"
@@ -69,14 +67,13 @@
                 android:padding="10dp" />
 
             <Spinner
-                android:id="@+id/add_product_sub_category"
+                android:id="@+id/edit_product_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_border"
                 android:entries="@array/ladies_category_array"
-                android:padding="10dp"
-                android:visibility="gone" />
+                android:padding="10dp" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -86,7 +83,7 @@
                 android:textColorHint="@android:color/white">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/add_product_price"
+                    android:id="@+id/edit_product_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Price"
@@ -96,12 +93,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/add_product_submit"
+                android:id="@+id/edit_product_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
-                android:text="Submit"
+                android:text="Update"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/textL"
                 android:textStyle="bold" />

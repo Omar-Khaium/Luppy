@@ -8,7 +8,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/women_recycler_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <include layout="@layout/shimmer_fragment_layout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/women_fragment_add"

@@ -7,16 +7,33 @@
     android:orientation="vertical"
     tools:context=".AdminDashboardActivity">
 
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/admin_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Dashboard" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/admin_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:alpha=".75"
         app:tabGravity="fill"
-        app:tabIconTint="@android:color/white"
-        app:tabIndicatorColor="@android:color/darker_gray"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="1dp"
         app:tabMode="fixed"
-        app:tabRippleColor="@color/colorPrimaryDark" />
+        app:tabIconTint="@color/colorAccent"
+        app:tabIndicatorColor="@android:color/holo_green_light"
+        app:tabRippleColor="@color/colorPrimary" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/admin_view_pager"

@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.emptybit.luppy.AdminDashboardActivity;
+import org.emptybit.luppy.EditProductActivity;
+import org.emptybit.luppy.Models.ProductModel;
+import org.emptybit.luppy.R;
+
 import java.util.ArrayList;
 
-public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.ViewHolder> {
+import static org.emptybit.luppy.MainActivity.PRODUCT_ID;
+
+public class ExtraFragmentAdapter extends RecyclerView.Adapter<ExtraFragmentAdapter.ViewHolder> {
 
     Context context;
     ArrayList<ProductModel> arrayList;
@@ -26,23 +34,23 @@ public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.
     DatabaseReference reference = database.getReference("products");
 
 
-    public MenFragmentAdapter(Context context, ArrayList<ProductModel> arrayList) {
+    public ExtraFragmentAdapter(Context context, ArrayList<ProductModel> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public MenFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
+    public ExtraFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_row_layout, viewGroup, false);
-        MenFragmentAdapter.ViewHolder holder = new MenFragmentAdapter.ViewHolder(view);
+        ExtraFragmentAdapter.ViewHolder holder = new ExtraFragmentAdapter.ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MenFragmentAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ExtraFragmentAdapter.ViewHolder holder, final int position) {
         holder.xName.setText(arrayList.get(position).getName());
-        holder.xCategory.setText(arrayList.get(position).getCategory());
+        holder.xCategory.setText(arrayList.get(position).getSub_category());
         holder.xPrice.setText(String.valueOf(arrayList.get(position).getPrice()));
         if (arrayList.get(position).getPhoto() != null && !arrayList.get(position).getPhoto().equals("")) {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -61,6 +69,14 @@ public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.
                 context.startActivity(new Intent(context, AdminDashboardActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
+
+        holder.xLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PRODUCT_ID = arrayList.get(position).getId();
+                context.startActivity(new Intent(context, EditProductActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     @Override
@@ -71,6 +87,7 @@ public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView xName, xCategory, xPrice;
         ImageView xImage, xDelete;
+        LinearLayout xLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +96,7 @@ public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.
             xCategory = itemView.findViewById(R.id.fragment_row_layout_category);
             xPrice = itemView.findViewById(R.id.fragment_row_layout_price);
             xDelete = itemView.findViewById(R.id.fragment_row_layout_delete);
+            xLayout = itemView.findViewById(R.id.fragment_layout);
         }
     }
 }

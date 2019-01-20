@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.emptybit.luppy.Models.ProductModel;
+
 import java.io.ByteArrayOutputStream;
 
 public class AddProductActivity extends AppCompatActivity {
@@ -126,22 +128,23 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, 100);
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (resultCode == RESULT_OK && requestCode == 100) {
+            if (resultCode == RESULT_OK && requestCode == 1) {
 
                 imageUri = data.getData();
-                xImage.setImageURI(imageUri);
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                xImage.setImageBitmap(bitmap);
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArray);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
                 bytes = byteArray.toByteArray();
             }
         } catch (Exception e) {

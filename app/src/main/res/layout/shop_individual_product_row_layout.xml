@@ -29,19 +29,36 @@
                     android:layout_height="200dp"
                     android:background="#80bfbfbf" />
 
-                <TextView
-                    android:id="@+id/shop_individual_product_item_price"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_gravity="end"
-                    android:background="#81000000"
-                    android:padding="5dp"
-                    android:text="Price : 2,000 TK"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/textS"
-                    android:textStyle="bold" />
+                    android:background="#80000000"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/shop_individual_product_item_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="2dp"
+                        android:text="Price : 2,000 TK"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/textM"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/shop_individual_product_item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="2dp"
+                        android:text="Price : 2,000 TK"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/textS"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

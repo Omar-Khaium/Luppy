@@ -4,6 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
+import org.emptybit.luppy.Adapters.ViewPagerAdapter;
+import org.emptybit.luppy.Fragments.AdminExtrasItemsFragment;
+import org.emptybit.luppy.Fragments.AdminMenItemsFragment;
+import org.emptybit.luppy.Fragments.AdminWomenItemsFragment;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
@@ -15,6 +21,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
+
+        Toolbar toolbar = findViewById(R.id.admin_toolbar);
+        setSupportActionBar(toolbar);
 
         xTab = findViewById(R.id.admin_tab_layout);
         xPager = findViewById(R.id.admin_view_pager);

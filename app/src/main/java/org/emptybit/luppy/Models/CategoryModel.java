@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Models;
 
 import java.util.ArrayList;
 
@@ -28,5 +28,10 @@ public class CategoryModel {
 
     public void setProductModels(ArrayList<ProductModel> productModels) {
         this.productModels = productModels;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

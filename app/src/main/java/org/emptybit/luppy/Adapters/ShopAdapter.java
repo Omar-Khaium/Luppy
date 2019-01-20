@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.emptybit.luppy.Models.CategoryModel;
+import org.emptybit.luppy.R;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         holder.xCategoryName.setText(arrayList.get(position).getName());
 
         holder.xProductListView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        ProductAdapter adapter = new ProductAdapter(arrayList.get(position).getProductModels());
+        ProductAdapter adapter = new ProductAdapter(context, arrayList.get(position).getProductModels());
         holder.xProductListView.setAdapter(adapter);
 
     }

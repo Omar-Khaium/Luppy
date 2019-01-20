@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.emptybit.luppy.AdminDashboardActivity;
+import org.emptybit.luppy.EditProductActivity;
+import org.emptybit.luppy.Models.ProductModel;
+import org.emptybit.luppy.R;
+
 import java.util.ArrayList;
+
+import static org.emptybit.luppy.MainActivity.PRODUCT_ID;
 
 public class WomenFragmentAdapter extends RecyclerView.Adapter<WomenFragmentAdapter.ViewHolder> {
 
@@ -42,7 +50,7 @@ public class WomenFragmentAdapter extends RecyclerView.Adapter<WomenFragmentAdap
     @Override
     public void onBindViewHolder(WomenFragmentAdapter.ViewHolder holder, final int position) {
         holder.xName.setText(arrayList.get(position).getName());
-        holder.xCategory.setText(arrayList.get(position).getCategory());
+        holder.xCategory.setText(arrayList.get(position).getSub_category());
         holder.xPrice.setText(String.valueOf(arrayList.get(position).getPrice()));
         if (arrayList.get(position).getPhoto() != null && !arrayList.get(position).getPhoto().equals("")) {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -61,6 +69,14 @@ public class WomenFragmentAdapter extends RecyclerView.Adapter<WomenFragmentAdap
                 context.startActivity(new Intent(context, AdminDashboardActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
+
+        holder.xLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PRODUCT_ID = arrayList.get(position).getId();
+                context.startActivity(new Intent(context, EditProductActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     @Override
@@ -71,6 +87,7 @@ public class WomenFragmentAdapter extends RecyclerView.Adapter<WomenFragmentAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView xName, xCategory, xPrice;
         ImageView xImage, xDelete;
+        LinearLayout xLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +96,7 @@ public class WomenFragmentAdapter extends RecyclerView.Adapter<WomenFragmentAdap
             xCategory = itemView.findViewById(R.id.fragment_row_layout_category);
             xPrice = itemView.findViewById(R.id.fragment_row_layout_price);
             xDelete = itemView.findViewById(R.id.fragment_row_layout_delete);
+            xLayout = itemView.findViewById(R.id.fragment_layout);
         }
     }
 }

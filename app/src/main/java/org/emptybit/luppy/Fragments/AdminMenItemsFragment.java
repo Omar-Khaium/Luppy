@@ -1,4 +1,4 @@
-package org.emptybit.luppy;
+package org.emptybit.luppy.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.emptybit.luppy.Adapters.MenFragmentAdapter;
+import org.emptybit.luppy.AddProductActivity;
+import org.emptybit.luppy.Models.ProductModel;
+import org.emptybit.luppy.R;
 
 import java.util.ArrayList;
 
@@ -27,6 +33,7 @@ public class AdminMenItemsFragment extends Fragment {
     private RecyclerView xListView;
     private ArrayList<ProductModel> arrayList;
     private FloatingActionButton xAdd;
+    private LinearLayout xShimmerLayout;
 
     @Nullable
     @Override
@@ -34,6 +41,7 @@ public class AdminMenItemsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_men_items, container, false);
         xListView = view.findViewById(R.id.men_recycler_list);
         xAdd = view.findViewById(R.id.men_fragment_add);
+        xShimmerLayout = view.findViewById(R.id.fragment_shimmer_layout);
         MenFragmentAdapter adapter = new MenFragmentAdapter(getContext(), arrayList);
 
         getData();
@@ -74,6 +82,9 @@ public class AdminMenItemsFragment extends Fragment {
                     MenFragmentAdapter adapter = new MenFragmentAdapter(getContext(), arrayList);
                     xListView.setAdapter(adapter);
                     xListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                    xListView.setVisibility(View.VISIBLE);
+                    xShimmerLayout.setVisibility(View.GONE);
                 }
 
                 @Override

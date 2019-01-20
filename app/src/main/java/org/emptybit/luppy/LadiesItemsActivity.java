@@ -27,7 +27,6 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenDress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DashboardActivity.SELECTED_ITEM = "Women Dress";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
@@ -35,7 +34,6 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenJeans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DashboardActivity.SELECTED_ITEM = "Women Jeans";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
@@ -43,7 +41,6 @@ public class LadiesItemsActivity extends AppCompatActivity {
         xWomenTShirt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DashboardActivity.SELECTED_ITEM = "Women T-Shirt";
                 startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });

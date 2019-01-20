@@ -24,7 +24,16 @@ public class DashboardActivity extends AppCompatActivity {
         xLadiesItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DashboardActivity.SELECTED_ITEM = "Ladies Items";
                 startActivity(new Intent(getApplicationContext(), LadiesItemsActivity.class));
+            }
+        });
+
+        xGentsItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DashboardActivity.SELECTED_ITEM = "Gents Items";
+                startActivity(new Intent(getApplicationContext(), ShopActivity.class));
             }
         });
 
