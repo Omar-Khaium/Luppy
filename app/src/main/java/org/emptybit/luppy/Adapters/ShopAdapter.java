@@ -36,7 +36,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     public void onBindViewHolder(ShopAdapter.ViewHolder holder, int position) {
         holder.xCategoryName.setText(arrayList.get(position).getName());
 
-        holder.xProductListView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        holder.xProductListView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         ProductAdapter adapter = new ProductAdapter(context, arrayList.get(position).getProductModels());
         holder.xProductListView.setAdapter(adapter);
 

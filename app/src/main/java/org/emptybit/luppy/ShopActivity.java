@@ -1,5 +1,6 @@
 package org.emptybit.luppy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,10 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +29,7 @@ import static org.emptybit.luppy.DashboardActivity.SELECTED_ITEM;
 
 public class ShopActivity extends AppCompatActivity {
 
+    public static ArrayList<CartModel> cart = new ArrayList<>();
     private RecyclerView xListView;
     private ShopAdapter adapter;
     private ArrayList<CategoryModel> categoryModels;
@@ -71,47 +71,10 @@ public class ShopActivity extends AppCompatActivity {
         xCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCartData();
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
             }
         });
 
-    }
-
-    private ArrayList<CartModel> getCartData() {
-        try {
-            final ArrayList<CartModel> arrayList = new ArrayList<>();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            database.getReference("carts").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        try {
-                            arrayList.add(snapshot.getValue(CartModel.class));
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    View convertView = LayoutInflater.from(getApplicationContext()).
-                            inflate(R.layout.cart_layout, new LinearLayout(getApplicationContext()), false);
-
-                    RecyclerView xCartList = convertView.findViewById(R.id.cart_layout_list);
-                    TextView xTotal = convertView.findViewById(R.id.cart_layout_total);
-
-//
-//                    xCartList.setAdapter();
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "Database Exception : " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            return arrayList;
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            return null;
-        }
     }
 
     public int getData() {

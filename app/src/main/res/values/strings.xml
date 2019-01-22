@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">Loop</string>
 
+    <string-array name="size">
+        <item>Select size</item>
+        <item>Size : S</item>
+        <item>Size : M</item>
+        <item>Size : L</item>
+        <item>Size : XL</item>
+        <item>Size : XXL</item>
+    </string-array>
+
     <string-array name="category_array">
         <item>Please select a category</item>
         <item>Ladies Items</item>

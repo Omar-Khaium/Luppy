@@ -2,14 +2,14 @@ package org.emptybit.luppy.Models;
 
 public class CartModel {
     private ProductModel product;
-    private int quantity;
+    private int size;
 
     public CartModel() {
     }
 
-    public CartModel(ProductModel product, int quantity) {
+    public CartModel(ProductModel product, int size) {
         this.product = product;
-        this.quantity = quantity;
+        this.size = size;
     }
 
     public ProductModel getProduct() {
@@ -20,11 +20,11 @@ public class CartModel {
         this.product = product;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getsize() {
+        return size;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setsize(int size) {
+        this.size = size;
     }
 }
