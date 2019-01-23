@@ -1,11 +1,13 @@
 package org.emptybit.luppy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,6 +35,13 @@ public class CartActivity extends AppCompatActivity {
         xTotalAmount.setText("0");
 
         xCheckout = findViewById(R.id.cart_checkout);
+
+        xCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CheckoutActivity.class).putExtra("Amount", xTotalAmount.getText().toString()));
+            }
+        });
 
         CartAdapter adapter = new CartAdapter(getApplicationContext());
         xListView.setAdapter(adapter);

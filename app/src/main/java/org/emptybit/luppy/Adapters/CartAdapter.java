@@ -59,7 +59,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.xSize.setAdapter(adapter);
 
-        holder.xSize.setSelection(cart.get(position).getsize());
+        holder.xSize.setSelection(cart.get(position).getSize());
 
         xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) + cart.get(position).getProduct().getPrice()));
         holder.xAdd.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.xRemove.setEnabled(true);
                 holder.xCount.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) + 1));
                 holder.xTotal.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) * cart.get(position).getProduct().getPrice()));
+                cart.get(position).setQuantity(Integer.parseInt(holder.xCount.getText().toString()));
                 xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) + cart.get(position).getProduct().getPrice()));
             }
         });
@@ -78,6 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (holder.xCount.getText().toString().equals("1")) {
                     holder.xRemove.setEnabled(false);
                 }
+                cart.get(position).setQuantity(Integer.parseInt(holder.xCount.getText().toString()));
                 holder.xCount.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) - 1));
                 holder.xTotal.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) * cart.get(position).getProduct().getPrice()));
                 xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) - cart.get(position).getProduct().getPrice()));
