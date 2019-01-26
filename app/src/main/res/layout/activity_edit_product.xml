@@ -63,7 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_border"
-                android:entries="@array/category_array"
                 android:padding="10dp" />
 
             <Spinner
@@ -72,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_border"
-                android:entries="@array/ladies_category_array"
                 android:padding="10dp" />
 
             <android.support.design.widget.TextInputLayout

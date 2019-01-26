@@ -56,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Name"
                     android:textColor="@android:color/white"
+                    android:inputType="textPersonName"
                     android:textColorHint="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
@@ -65,7 +66,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_border"
-                android:entries="@array/category_array"
                 android:padding="10dp" />
 
             <Spinner
@@ -74,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_border"
-                android:entries="@array/ladies_category_array"
                 android:padding="10dp"
                 android:visibility="gone" />
 
@@ -91,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Price"
                     android:textColor="@android:color/white"
+                    android:inputType="numberDecimal"
                     android:textColorHint="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>

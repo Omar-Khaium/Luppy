@@ -1,13 +1,15 @@
 package org.emptybit.luppy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -22,9 +24,11 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.emptybit.help.Validate;
 import org.emptybit.luppy.Models.ProductModel;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -33,6 +37,8 @@ public class AddProductActivity extends AppCompatActivity {
     Spinner xCategory, xSubCategory;
     Button xSubmit;
     byte[] bytes;
+    AlertDialog.Builder builder;
+    AlertDialog alert;
 
     Uri imageUri;
 
@@ -55,10 +61,20 @@ public class AddProductActivity extends AppCompatActivity {
         xSubCategory = findViewById(R.id.add_product_sub_category);
         xSubmit = findViewById(R.id.add_product_submit);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.category_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        xCategory.setAdapter(adapter);
+        builder = new AlertDialog.Builder(this);
+        alert = builder.create();
+
+        ArrayList<String> categoryArray = new ArrayList();
+        categoryArray.add("Please select a category");
+        categoryArray.add("Ladies Items");
+        categoryArray.add("Gents Items");
+        categoryArray.add("Extra");
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.drop_down_admin_layout,
+                categoryArray
+        );
+        xCategory.setAdapter(categoryAdapter);
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("products");
@@ -69,24 +85,47 @@ public class AddProductActivity extends AppCompatActivity {
                 if (i != 0) {
                     switch (i) {
                         case 1:
-                            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                    R.array.ladies_category_array, android.R.layout.simple_spinner_item);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            xSubCategory.setAdapter(adapter);
+                            ArrayList<String> sub_categoryArray = new ArrayList();
+                            sub_categoryArray.add("Please select a sub-category");
+                            sub_categoryArray.add("Women's Dress");
+                            sub_categoryArray.add("Women's Jeans");
+                            sub_categoryArray.add("Women's T-Shirt");
+                            ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<String>(
+                                    getApplicationContext(),
+                                    R.layout.drop_down_admin_layout,
+                                    sub_categoryArray
+                            );
+                            xSubCategory.setAdapter(subCategoryAdapter);
                             break;
 
                         case 2:
-                            adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                    R.array.gents_category_array, android.R.layout.simple_spinner_item);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            xSubCategory.setAdapter(adapter);
+                            sub_categoryArray = new ArrayList();
+                            sub_categoryArray.add("Please select a sub-category");
+                            sub_categoryArray.add("Men's Dress");
+                            sub_categoryArray.add("Men's Shirt");
+                            sub_categoryArray.add("Men's T-Shirt");
+                            subCategoryAdapter = new ArrayAdapter<String>(
+                                    getApplicationContext(),
+                                    R.layout.drop_down_admin_layout,
+                                    sub_categoryArray
+                            );
+                            xSubCategory.setAdapter(subCategoryAdapter);
                             break;
 
                         case 3:
-                            adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                    R.array.extra_category_array, android.R.layout.simple_spinner_item);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            xSubCategory.setAdapter(adapter);
+                            sub_categoryArray = new ArrayList();
+                            sub_categoryArray.add("Please select a sub-category");
+                            sub_categoryArray.add("Button");
+                            sub_categoryArray.add("Embroidery");
+                            sub_categoryArray.add("Lace");
+                            sub_categoryArray.add("Lace Belts");
+                            sub_categoryArray.add("Zipper");
+                            subCategoryAdapter = new ArrayAdapter<String>(
+                                    getApplicationContext(),
+                                    R.layout.drop_down_admin_layout,
+                                    sub_categoryArray
+                            );
+                            xSubCategory.setAdapter(subCategoryAdapter);
                             break;
                     }
 
@@ -111,18 +150,64 @@ public class AddProductActivity extends AppCompatActivity {
         xSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = reference.push().getKey();
-                String image = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                String name = xName.getText().toString();
-                int price = Integer.parseInt(xPrice.getText().toString());
-                String category = xCategory.getSelectedItem().toString();
-                String sub_category = xSubCategory.getSelectedItem().toString();
+                boolean flag = true;
 
-                ProductModel product = new ProductModel(id, name, category, sub_category, price, image);
-                reference.child(id).setValue(product);
-                Snackbar.make(view, "Product added successfully", Snackbar.LENGTH_INDEFINITE).show();
+                if (!Validate.Input(xName)) {
+                    builder.setMessage("Name is required");
+                    alert.show();
+                    flag = false;
+                } else if (!Validate.Spinner(xCategory)) {
+                    builder.setMessage("Category is required");
+                    alert.show();
+                    flag = false;
+                } else if (!Validate.Spinner(xSubCategory)) {
+                    builder.setMessage("Sub category is required");
+                    alert.show();
+                    flag = false;
+                } else if (!Validate.Input(xPrice)) {
+                    builder.setMessage("Price is required");
+                    alert.show();
+                    flag = false;
+                } else if (bytes == null || bytes.length == 0) {
+                    builder.setMessage("Image is required");
+                    alert.show();
+                    flag = false;
+                }
 
-                startActivity(new Intent(getApplicationContext(), AdminDashboardActivity.class));
+                if (flag) {
+                    String id = reference.push().getKey();
+                    String image = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                    String name = xName.getText().toString();
+                    int price = Integer.parseInt(xPrice.getText().toString());
+                    String category = xCategory.getSelectedItem().toString();
+                    String sub_category = xSubCategory.getSelectedItem().toString();
+
+                    ProductModel product = new ProductModel(id, name, category, sub_category, price, image);
+                    reference.child(id).setValue(product);
+                    builder.setMessage("Product created successfully.");
+                    alert = builder.create();
+                    alert.show();
+                    // Hide after some seconds
+                    final Handler handler = new Handler();
+                    final Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (alert.isShowing()) {
+                                alert.dismiss();
+                                startActivity(new Intent(getApplicationContext(), AdminDashboardActivity.class));
+                            }
+                        }
+                    };
+
+                    alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            handler.removeCallbacks(runnable);
+                        }
+                    });
+
+                    handler.postDelayed(runnable, 1500);
+                }
             }
         });
     }
@@ -144,7 +229,7 @@ public class AddProductActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 xImage.setImageBitmap(bitmap);
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 25, byteArray);
                 bytes = byteArray.toByteArray();
             }
         } catch (Exception e) {

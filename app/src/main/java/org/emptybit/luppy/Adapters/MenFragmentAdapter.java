@@ -51,7 +51,7 @@ public class MenFragmentAdapter extends RecyclerView.Adapter<MenFragmentAdapter.
     public void onBindViewHolder(MenFragmentAdapter.ViewHolder holder, final int position) {
         holder.xName.setText(arrayList.get(position).getName());
         holder.xCategory.setText(arrayList.get(position).getSub_category());
-        holder.xPrice.setText(String.valueOf(arrayList.get(position).getPrice()));
+        holder.xPrice.setText(String.valueOf(arrayList.get(position).getPrice()) + " BDT");
         if (arrayList.get(position).getPhoto() != null && !arrayList.get(position).getPhoto().equals("")) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;

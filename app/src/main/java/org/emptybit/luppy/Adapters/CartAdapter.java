@@ -9,12 +9,15 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.emptybit.luppy.R;
+
+import java.util.ArrayList;
 
 import static org.emptybit.luppy.CartActivity.xTotalAmount;
 import static org.emptybit.luppy.ShopActivity.cart;
@@ -49,19 +52,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         } else {
             holder.xImage.setImageResource(R.drawable.ic_product);
         }
-        holder.xCount.setText("" + 1);
+        holder.xCount.setText("" + cart.get(position).getQuantity());
 
-        holder.xTotal.setText("" + cart.get(position).getProduct().getPrice());
+        holder.xTotal.setText(String.valueOf(cart.get(position).getQuantity() * cart.get(position).getProduct().getPrice()));
 
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.size, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.xSize.setAdapter(adapter);
-
+        ArrayList<String> sizeArray = new ArrayList();
+        sizeArray.add("Select size");
+        sizeArray.add("Size : S");
+        sizeArray.add("Size : M");
+        sizeArray.add("Size : L");
+        sizeArray.add("Size : XL");
+        sizeArray.add("Size : XXL");
+        ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(
+                context,
+                R.layout.drop_down_user_layout,
+                sizeArray
+        );
+        holder.xSize.setAdapter(sizeAdapter);
         holder.xSize.setSelection(cart.get(position).getSize());
 
-        xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) + cart.get(position).getProduct().getPrice()));
+        holder.xSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cart.get(position).setSize(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) + (cart.get(position).getProduct().getPrice() * cart.get(position).getQuantity())));
         holder.xAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,11 +100,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View view) {
                 if (holder.xCount.getText().toString().equals("1")) {
                     holder.xRemove.setEnabled(false);
+                    holder.xCount.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) - 1));
+                    cart.get(position).setQuantity(Integer.parseInt(holder.xCount.getText().toString()));
+                    holder.xTotal.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) * cart.get(position).getProduct().getPrice()));
+                    xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) - cart.get(position).getProduct().getPrice()));
+                } else {
+                    holder.xCount.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) - 1));
+                    cart.get(position).setQuantity(Integer.parseInt(holder.xCount.getText().toString()));
+                    holder.xTotal.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) * cart.get(position).getProduct().getPrice()));
+                    xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) - cart.get(position).getProduct().getPrice()));
                 }
-                cart.get(position).setQuantity(Integer.parseInt(holder.xCount.getText().toString()));
-                holder.xCount.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) - 1));
-                holder.xTotal.setText("" + (Integer.parseInt(holder.xCount.getText().toString()) * cart.get(position).getProduct().getPrice()));
-                xTotalAmount.setText(String.valueOf(Integer.parseInt(xTotalAmount.getText().toString()) - cart.get(position).getProduct().getPrice()));
             }
         });
     }

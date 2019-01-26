@@ -1,14 +1,17 @@
 package org.emptybit.luppy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -26,10 +29,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.emptybit.help.Validate;
 import org.emptybit.luppy.Models.ProductModel;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import static org.emptybit.luppy.MainActivity.PRODUCT_ID;
 
@@ -44,7 +48,12 @@ public class EditProductActivity extends AppCompatActivity {
     String image;
     Uri imageUri;
 
+    AlertDialog.Builder builder;
+    AlertDialog alert;
+
     ProductModel product = new ProductModel();
+
+    ArrayList<String> categoryArray = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,27 +71,83 @@ public class EditProductActivity extends AppCompatActivity {
         xSubCategory = findViewById(R.id.edit_product_sub_category);
         xSubmit = findViewById(R.id.edit_product_submit);
 
+        builder = new AlertDialog.Builder(this);
+        alert = builder.create();
+
         xSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean flag = true;
+
                 if (bytes != null) {
                     image = Base64.encodeToString(bytes, Base64.NO_WRAP);
                 }
-                ProductModel updatedProduct = new ProductModel(product.getId(), xName.getText().toString(),
-                        xCategory.getSelectedItem().toString(), xSubCategory.getSelectedItem().toString(),
-                        Integer.parseInt(xPrice.getText().toString()), image);
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference reference = database.getReference("products").child(product.getId());
-                reference.setValue(updatedProduct);
-                Toast.makeText(getApplicationContext(), "Profile updated Successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditProductActivity.this, AdminDashboardActivity.class));
+
+                if (!Validate.Input(xName)) {
+                    builder.setMessage("Name is required");
+                    builder.show();
+                    flag = false;
+                } else if (!Validate.Spinner(xCategory)) {
+                    builder.setMessage("Category is required");
+                    builder.show();
+                    flag = false;
+                } else if (!Validate.Spinner(xSubCategory)) {
+                    builder.setMessage("Sub category is required");
+                    builder.show();
+                    flag = false;
+                } else if (!Validate.Input(xPrice)) {
+                    builder.setMessage("Price is required");
+                    builder.show();
+                    flag = false;
+                } else if (image.isEmpty()) {
+                    builder.setMessage("Image is required");
+                    builder.show();
+                    flag = false;
+                }
+
+                if (flag) {
+                    ProductModel updatedProduct = new ProductModel(product.getId(), xName.getText().toString(),
+                            xCategory.getSelectedItem().toString(), xSubCategory.getSelectedItem().toString(),
+                            Integer.parseInt(xPrice.getText().toString()), image);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference reference = database.getReference("products").child(product.getId());
+                    reference.setValue(updatedProduct);
+                    builder.setMessage("Product updated successfully.");
+                    alert = builder.create();
+                    alert.show();
+                    // Hide after some seconds
+                    final Handler handler = new Handler();
+                    final Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (alert.isShowing()) {
+                                alert.dismiss();
+                                startActivity(new Intent(getApplicationContext(), AdminDashboardActivity.class));
+                            }
+                        }
+                    };
+
+                    alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            handler.removeCallbacks(runnable);
+                        }
+                    });
+
+                    handler.postDelayed(runnable, 1500);
+                }
             }
         });
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.category_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        xCategory.setAdapter(adapter);
+        categoryArray.add("Please select a category");
+        categoryArray.add("Ladies Items");
+        categoryArray.add("Gents Items");
+        categoryArray.add("Extra");
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.drop_down_admin_layout,
+                categoryArray
+        );
+        xCategory.setAdapter(categoryAdapter);
 
         xCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -93,24 +158,47 @@ public class EditProductActivity extends AppCompatActivity {
                     if (i != 0) {
                         switch (i) {
                             case 1:
-                                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.ladies_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
+                                ArrayList<String> sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Women's Dress");
+                                sub_categoryArray.add("Women's Jeans");
+                                sub_categoryArray.add("Women's T-Shirt");
+                                ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
                                 break;
 
                             case 2:
-                                adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.gents_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
+                                sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Men's Dress");
+                                sub_categoryArray.add("Men's Shirt");
+                                sub_categoryArray.add("Men's T-Shirt");
+                                subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
                                 break;
 
                             case 3:
-                                adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.extra_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
+                                sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Button");
+                                sub_categoryArray.add("Embroidery");
+                                sub_categoryArray.add("Lace");
+                                sub_categoryArray.add("Lace Belts");
+                                sub_categoryArray.add("Zipper");
+                                subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
                                 break;
                         }
 
@@ -154,7 +242,7 @@ public class EditProductActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 xImage.setImageBitmap(bitmap);
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 25, byteArray);
                 bytes = byteArray.toByteArray();
             }
         } catch (Exception e) {
@@ -173,74 +261,54 @@ public class EditProductActivity extends AppCompatActivity {
                         xName.setText(product.getName());
                         xPrice.setText("" + product.getPrice());
 
-                        String categoryArr[] = getResources().getStringArray(R.array.category_array);
-                        xCategory.setSelection(Arrays.asList(categoryArr).indexOf(product.getCategory()));
-
-                        ArrayAdapter<CharSequence> adapter = null;
-                        String subCategoryArr[] = getResources().getStringArray(R.array.ladies_category_array);
+                        xCategory.setSelection(categoryArray.indexOf(product.getCategory()));
 
                         switch (xCategory.getSelectedItemPosition()) {
                             case 1:
-                                subCategoryArr = getResources().getStringArray(R.array.ladies_category_array);
-                                adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.ladies_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
-                                switch (Arrays.asList(subCategoryArr).indexOf(product.getSub_category())) {
-                                    case 1:
-                                        xSubCategory.setSelection(1);
-                                        break;
-                                    case 2:
-                                        xSubCategory.setSelection(2);
-                                        break;
-                                    case 3:
-                                        xSubCategory.setSelection(3);
-                                        break;
-                                }
+                                ArrayList<String> sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Women's Dress");
+                                sub_categoryArray.add("Women's Jeans");
+                                sub_categoryArray.add("Women's T-Shirt");
+                                ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
+                                xSubCategory.setSelection(sub_categoryArray.indexOf(product.getSub_category()));
                                 break;
 
                             case 2:
-                                subCategoryArr = getResources().getStringArray(R.array.gents_category_array);
-                                adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.gents_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
-                                switch (Arrays.asList(subCategoryArr).indexOf(product.getSub_category())) {
-                                    case 1:
-                                        xSubCategory.setSelection(1);
-                                        break;
-                                    case 2:
-                                        xSubCategory.setSelection(2);
-                                        break;
-                                    case 3:
-                                        xSubCategory.setSelection(3);
-                                        break;
-                                }
+                                sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Men's Dress");
+                                sub_categoryArray.add("Men's Shirt");
+                                sub_categoryArray.add("Men's T-Shirt");
+                                subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
+                                xSubCategory.setSelection(sub_categoryArray.indexOf(product.getSub_category()));
                                 break;
 
                             case 3:
-                                subCategoryArr = getResources().getStringArray(R.array.extra_category_array);
-                                adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                        R.array.extra_category_array, android.R.layout.simple_spinner_item);
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                xSubCategory.setAdapter(adapter);
-                                switch (Arrays.asList(subCategoryArr).indexOf(product.getSub_category())) {
-                                    case 1:
-                                        xSubCategory.setSelection(1);
-                                        break;
-                                    case 2:
-                                        xSubCategory.setSelection(2);
-                                        break;
-                                    case 3:
-                                        xSubCategory.setSelection(3);
-                                        break;
-                                    case 4:
-                                        xSubCategory.setSelection(4);
-                                        break;
-                                    case 5:
-                                        xSubCategory.setSelection(5);
-                                        break;
-                                }
+                                sub_categoryArray = new ArrayList();
+                                sub_categoryArray.add("Please select a sub-category");
+                                sub_categoryArray.add("Button");
+                                sub_categoryArray.add("Embroidery");
+                                sub_categoryArray.add("Lace");
+                                sub_categoryArray.add("Lace Belts");
+                                sub_categoryArray.add("Zipper");
+                                subCategoryAdapter = new ArrayAdapter<String>(
+                                        getApplicationContext(),
+                                        R.layout.drop_down_admin_layout,
+                                        sub_categoryArray
+                                );
+                                xSubCategory.setAdapter(subCategoryAdapter);
+                                xSubCategory.setSelection(sub_categoryArray.indexOf(product.getSub_category()));
                                 break;
                         }
 

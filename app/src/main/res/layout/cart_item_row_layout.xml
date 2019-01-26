@@ -59,8 +59,7 @@
                 android:id="@+id/cart_item_size"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:background="@drawable/spinner_background"
-                android:entries="@array/size" />
+                android:background="@drawable/spinner_background" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -12,9 +12,10 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(ProductModel product, int size) {
+    public CartModel(ProductModel product, int size, int quantity) {
         this.product = product;
         this.size = size;
+        this.quantity = quantity;
     }
 
     public CartModel(String id, String cardNumber, String cardCVC, String cardExpireDate, ProductModel product, int size, int quantity) {

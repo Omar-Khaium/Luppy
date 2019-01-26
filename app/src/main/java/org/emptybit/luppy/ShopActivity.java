@@ -24,6 +24,7 @@ import org.emptybit.luppy.Models.CategoryModel;
 import org.emptybit.luppy.Models.ProductModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.emptybit.luppy.DashboardActivity.SELECTED_ITEM;
 
@@ -65,6 +66,13 @@ public class ShopActivity extends AppCompatActivity {
             case "Extra":
                 toolbar.setBackgroundColor(getResources().getColor(R.color.colorExtras));
                 break;
+        }
+
+        for (Iterator<CartModel> cartModel = cart.iterator(); cartModel.hasNext(); ) {
+            CartModel cartModel1 = cartModel.next();
+            if (cartModel1.getQuantity() == 0) {
+                cart.remove(cartModel1);
+            }
         }
         getData();
 

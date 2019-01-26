@@ -62,10 +62,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.xImage.setImageResource(R.drawable.ic_product);
         }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.size, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.xSize.setAdapter(adapter);
+
+        ArrayList<String> sizeArray = new ArrayList();
+        sizeArray.add("Select size");
+        sizeArray.add("Size : S");
+        sizeArray.add("Size : M");
+        sizeArray.add("Size : L");
+        sizeArray.add("Size : XL");
+        sizeArray.add("Size : XXL");
+        ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(
+                context,
+                R.layout.drop_down_user_layout,
+                sizeArray
+        );
+        holder.xSize.setAdapter(sizeAdapter);
+
+        for (CartModel cartModel : cart) {
+            if (cartModel.getProduct().getId().equals(arrayList.get(position).getId())) {
+                holder.xAddToCart.setText("Added to cart");
+                holder.xAddToCart.setEnabled(false);
+                holder.xSize.setEnabled(false);
+                holder.xSize.setSelection(cartModel.getSize());
+            }
+        }
 
         holder.xAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +100,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     holder.xAddToCart.setText("Added to cart");
                     holder.xAddToCart.setEnabled(false);
                     holder.xSize.setEnabled(false);
-                    cart.add(new CartModel(arrayList.get(position), holder.xSize.getSelectedItemPosition()));
+                    cart.add(new CartModel(arrayList.get(position), holder.xSize.getSelectedItemPosition(), 1));
                     Snackbar.make(view, "", Snackbar.LENGTH_SHORT).setAction("Added", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

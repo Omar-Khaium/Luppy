@@ -27,10 +27,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@android:color/white"
-                app:boxBackgroundColor="@android:color/white"
-                app:boxStrokeColor="@android:color/white">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/login_email"
@@ -45,10 +42,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@android:color/white"
-                app:boxBackgroundColor="@android:color/white"
-                app:boxStrokeColor="@android:color/white">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/login_password"
