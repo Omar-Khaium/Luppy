@@ -21,6 +21,7 @@ import org.emptybit.luppy.Models.OrderModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import static org.emptybit.luppy.ShopActivity.cart;
 
@@ -48,8 +49,11 @@ public class CheckoutActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
         alert = builder.create();
 
-        for (CartModel cartModel : cart) {
-            if (cartModel.getQuantity() == 0) cart.remove(cartModel);
+        for (Iterator<CartModel> it = cart.iterator(); it.hasNext(); ) {
+            CartModel s = it.next();
+            if (s.getQuantity() == 0) {
+                it.remove();
+            }
         }
 
 //        xName = findViewById(R.id.checkout_customer_name);

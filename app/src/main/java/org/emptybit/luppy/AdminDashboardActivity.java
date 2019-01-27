@@ -51,7 +51,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AdminDashboardActivity.this.getMenuInflater().inflate(R.menu.sign_out, menu);
+        AdminDashboardActivity.this.getMenuInflater().inflate(R.menu.admin_menu, menu);
         return true;
     }
 
@@ -80,6 +80,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
             });
             alertDialog.show();
             return true;
+        } else if (id == R.id.action_order_history) {
+            startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
