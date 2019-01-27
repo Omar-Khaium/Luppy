@@ -16,56 +16,66 @@
         app:title="Cart"
         app:titleTextColor="@android:color/white" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cart_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="100dp" />
+        android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="-100dp"
-        android:orientation="vertical"
-        android:weightSum="2">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cart_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/xyz" />
 
         <LinearLayout
+            android:id="@+id/xyz"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="5">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:text="Total amount"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/textM"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="3">
 
-            <TextView
-                android:id="@+id/cart_total"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:hint="Total amount"
-                android:paddingLeft="15dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="Total amount"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textM"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cart_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="Total amount"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textM"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/cart_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_green_light"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Confirm Order"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/textM"
                 android:textStyle="bold" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/cart_checkout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Checkout" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

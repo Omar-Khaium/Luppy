@@ -26,13 +26,12 @@
         android:id="@+id/admin_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:alpha=".75"
         app:tabGravity="fill"
         android:background="@color/colorPrimaryDark"
         android:elevation="1dp"
         app:tabMode="fixed"
-        app:tabIconTint="@color/colorAccent"
-        app:tabIndicatorColor="@android:color/holo_green_light"
+        app:tabIconTint="@android:color/white"
+        app:tabIndicatorColor="@android:color/white"
         app:tabRippleColor="@color/colorPrimary" />
 
     <android.support.v4.view.ViewPager

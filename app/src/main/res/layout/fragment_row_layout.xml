@@ -4,6 +4,7 @@
     android:id="@+id/fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="-2dp"
     android:orientation="horizontal">
 
     <android.support.design.card.MaterialCardView
@@ -25,12 +26,11 @@
                 android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:background="@color/colorPrimary"
-                android:src="@drawable/button19" />
+                android:background="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="85dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="64dp"
                 android:gravity="center_vertical"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Name"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/textL" />
+                    android:textSize="@dimen/textM" />
 
                 <TextView
                     android:id="@+id/fragment_row_layout_category"
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Category"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/textM" />
+                    android:textSize="@dimen/textS" />
 
                 <TextView
                     android:id="@+id/fragment_row_layout_price"
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Price"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/textM" />
+                    android:textSize="@dimen/textS" />
             </LinearLayout>
 
             <ImageView

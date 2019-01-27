@@ -42,7 +42,6 @@ public class AdminWomenItemsFragment extends Fragment {
         xListView = view.findViewById(R.id.women_recycler_list);
         xAdd = view.findViewById(R.id.women_fragment_add);
         xShimmerLayout = view.findViewById(R.id.fragment_shimmer_layout);
-
         getData();
 
 
@@ -100,4 +99,6 @@ public class AdminWomenItemsFragment extends Fragment {
 
         arrayList = new ArrayList<>();
     }
+
+
 }

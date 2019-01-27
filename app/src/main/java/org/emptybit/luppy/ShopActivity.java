@@ -121,16 +121,13 @@ public class ShopActivity extends AppCompatActivity {
         try {
             for (ProductModel product : arrayList) {
                 if (categoryModels.size() != 0) {
-                    for (CategoryModel category : categoryModels) {
-                        if (category.getName().equals(product.getSub_category())) {
-                            category.getProductModels().add(product);
-                            break;
-                        } else {
-                            category = new CategoryModel(product.getSub_category(), new ArrayList<ProductModel>());
-                            category.getProductModels().add(product);
-                            categoryModels.add(category);
-                            break;
-                        }
+                    if (categoryExists(categoryModels, product) == null) {
+                        CategoryModel category = new CategoryModel(product.getSub_category(), new ArrayList<ProductModel>());
+                        category.getProductModels().add(product);
+                        categoryModels.add(category);
+                    } else {
+                        CategoryModel category = categoryExists(categoryModels, product);
+                        category.getProductModels().add(product);
                     }
                 } else {
                     CategoryModel category = new CategoryModel(product.getSub_category(), new ArrayList<ProductModel>());
@@ -146,5 +143,14 @@ public class ShopActivity extends AppCompatActivity {
             xShimmerLayout.setVisibility(View.GONE);
         } catch (Exception e) {
         }
+    }
+
+    private CategoryModel categoryExists(ArrayList<CategoryModel> categoryModels, ProductModel productModel) {
+        for (CategoryModel categoryModel : categoryModels) {
+            if (categoryModel.getName().equals(productModel.getSub_category())) {
+                return categoryModel;
+            }
+        }
+        return null;
     }
 }
