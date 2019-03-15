@@ -54,11 +54,14 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
 
     private String calculatePrice(ArrayList<CartModel> cartModels) {
         int price = 0;
-
-        for (CartModel cartModel : cartModels) {
-            price += (cartModel.getQuantity() * cartModel.getProduct().getPrice());
+        if (cartModels==null){
+            return "0";
+        } else {
+            for (CartModel cartModel : cartModels) {
+                price += (cartModel.getQuantity() * cartModel.getProduct().getPrice());
+            }
+            return String.valueOf(price);
         }
-        return String.valueOf(price);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
